@@ -45,6 +45,7 @@ const middleware = require("./middlewares/auth");
 
 app.post('/v1/register', fileUpload.single('picture'), authController.handleRegister);
 app.post('/v1/login', authController.handleLogin);
+// app.post('/v1/forgot-password', authController.handleForgotPassword);
 
 /* -------------- End Auth Endpoint -------------- */
 
