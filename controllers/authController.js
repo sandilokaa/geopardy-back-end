@@ -5,7 +5,7 @@ const authService = require("../services/authService");
 
 const handleRegister = async(req, res) => {
 
-    const { name, email, password, phoneNumber, city } = req.body;
+    const { name, email, password, phoneNumber, city, role } = req.body;
 
     const { status, status_code, message, data} = await authService.handleRegister({
         name,
@@ -13,7 +13,8 @@ const handleRegister = async(req, res) => {
         password,
         phoneNumber,
         city,
-        picture: req.file
+        picture: req.file,
+        role
     });
 
     res.status(status_code).send({

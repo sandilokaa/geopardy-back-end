@@ -19,7 +19,7 @@ class usersRepository {
 
     /* ------------------- Handle Register ------------------- */
 
-    static async handleRegister({ name, email, password, phoneNumber, city, picture }) {
+    static async handleRegister({ name, email, password, phoneNumber, city, picture, role }) {
     
         const createdUser = await users.create({
             name,
@@ -27,7 +27,8 @@ class usersRepository {
             password,
             phoneNumber,
             city,
-            picture
+            picture,
+            role
         });
 
         return createdUser;

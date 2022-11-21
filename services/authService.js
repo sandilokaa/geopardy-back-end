@@ -10,7 +10,7 @@ class authService {
 
     /* ------------------- Handle Register ------------------- */
 
-    static async handleRegister({ name, email, password, phoneNumber, city, picture }) {
+    static async handleRegister({ name, email, password, phoneNumber, city, picture, role }) {
 
         // ------------------------- Payload Validation ------------------------- //
 
@@ -89,6 +89,17 @@ class authService {
             };
         }
 
+        if (!role) {
+            return {
+                status: false,
+                status_code: 400,
+                message: "Role wajib diisi!",
+                data: {
+                    registeredUser: null,
+                },
+            };
+        }
+
         // ------------------------- End Payload Validation ------------------------- //
 
         const getUserByEmail = await authRepository.handleGetUserByEmail({ email });
@@ -123,7 +134,8 @@ class authService {
                 password: hashedPassword,
                 phoneNumber,
                 city,
-                picture: pictures
+                picture: pictures,
+                role
             });
 
             return {
