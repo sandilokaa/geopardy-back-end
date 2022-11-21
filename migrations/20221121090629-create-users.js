@@ -27,6 +27,9 @@ module.exports = {
       picture: {
         type: Sequelize.TEXT
       },
+      role: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
