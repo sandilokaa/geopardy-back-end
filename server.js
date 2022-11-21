@@ -3,8 +3,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 
+const fileUpload = require("./utils/fileUpload");
+
 const app = express();
-const PORT = 2000;
+const PORT = 8080;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -36,11 +38,20 @@ const middleware = require("./middlewares/auth");
 
 // ------------------------- Define Routes ------------------------- //
 
+
 /* -------------- Auth Endpoint -------------- */
 
-app.post('/v1/register', authController.handleRegister);
+app.post('/v1/register', fileUpload.single('picture'), authController.handleRegister);
+app.post('/v1/login', authController.handleLogin);
 
 /* -------------- End Auth Endpoint -------------- */
+
+
+/* -------------- Admin Endpoint -------------- */
+
+
+
+/* -------------- End Admin Endpoint -------------- */
 
 // ------------------------- End Define Routes ------------------------- //
 
@@ -48,7 +59,7 @@ app.post('/v1/register', authController.handleRegister);
 // ------------------------- Server Listen ------------------------- //
 
 app.listen(PORT, () => {
-    console.log(`Server berhasil berjalan di port http://localhost:${PORT}`);
+    console.log(`Server is running successfully on PORT http://localhost:${PORT}`);
 });
 
 // ------------------------- End Server Listen ------------------------- //
