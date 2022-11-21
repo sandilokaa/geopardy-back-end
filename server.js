@@ -24,6 +24,8 @@ app.use("/public/files", express.static(path.join(__dirname, "/storages")));
 
 const authController = require("./controllers/authController");
 
+const adminController = require("./controllers/adminController");
+
 // ------------------------- End Import Controllers ------------------------- //
 
 
@@ -49,7 +51,7 @@ app.post('/v1/login', authController.handleLogin);
 
 /* -------------- Admin Endpoint -------------- */
 
-
+app.put('/v1/admin/update/:id', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleAdminUpdateProfile );
 
 /* -------------- End Admin Endpoint -------------- */
 
