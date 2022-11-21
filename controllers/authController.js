@@ -5,7 +5,7 @@ const authService = require("../services/authService");
 
 const handleRegister = async(req, res) => {
 
-    const { name, email, password, phoneNumber, city, picture } = req.body;
+    const { name, email, password, phoneNumber, city } = req.body;
 
     const { status, status_code, message, data} = await authService.handleRegister({
         name,
