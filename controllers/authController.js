@@ -90,9 +90,57 @@ const handleForgotPassword = async(req, res) => {
 
 /* ------------------- End Handle Forgot Password ------------------- */
 
+
+/* ------------------- Handle Verify Forgot Password ------------------- */
+
+const handleVerifyForgotPassword = async(req, res) => {
+
+    const { otp, isVerified } = req.body;
+
+    const { status, status_code, message, data } = await authService.handleVerifyForgotPassword({
+        otp,
+        isVerified
+    });
+
+    res.status(status_code).send({
+        status: status, 
+        message: message,
+        data: data,
+    });
+
+};
+
+/* ------------------- End Handle Verify Forgot Password ------------------- */
+
+
+/* ------------------- Handle Reset Forgot Password ------------------- */
+
+const handleResetPassword = async(req, res) => {
+
+    const { email, otp, password } = req.body;
+
+    const { status, status_code, message, data } = await authService.handleResetPassword({
+        email,
+        otp,
+        password
+    });
+
+    res.status(status_code).send({
+        status: status, 
+        message: message,
+        data: data,
+    });
+
+};
+
+/* ------------------- End Handle Reset Forgot Password ------------------- */
+
+
 module.exports = { 
     handleRegister, 
     handleLogin, 
     handleCurrentUser,
-    handleForgotPassword
+    handleForgotPassword,
+    handleVerifyForgotPassword,
+    handleResetPassword
 };

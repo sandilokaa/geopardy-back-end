@@ -421,6 +421,172 @@ class authService {
 
     /* ------------------- End Handle Forgot Password ------------------- */
 
+
+    /* ------------------- Handle Verify Forgot Password ------------------- */
+
+    static async handleVerifyForgotPassword({ otp, isVerified }) {
+
+        try {
+
+            // ------------------------------- Payload Validation ------------------------------- //
+
+            if (!otp) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "OTP Wajib Diisi",
+                    data: {
+                        forgotPassword: null,
+                    }
+                };
+            }
+
+            // ------------------------------- End Payload Validation ------------------------------- //
+
+            const getDataForgotPassword = await authRepository.handleCheckOTPForgotPassword({ otp });
+
+            if (getDataForgotPassword.otp == otp) {
+
+                const updatedVerifryPassword = await authRepository.handleVerifyForgotPassword({ otp, isVerified });
+
+                return {
+                    status: true,
+                    status_code: 201,
+                    message: "OTP berhasil terverifikasi!",
+                    data: {
+                        forgotPassword: updatedVerifryPassword
+                    }
+                };
+
+            }
+            
+        } catch (err) {
+
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    forgotPassword: null
+                },
+            };
+            
+        }
+
+    };
+
+    /* ------------------- End Handle Verify Forgot Password ------------------- */
+
+
+    /* ------------------- Handle Reset Forgot Password ------------------- */
+
+    static async handleResetPassword({ email, otp, password }) {
+
+        try {
+            
+            // ------------------------------- Payload Validation ------------------------------- //
+
+            if (!email) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Email wajib diisi",
+                    data: {
+                        resetPassword: null,
+                    }
+                }
+            }
+
+            if (!otp) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "OTP wajib diisi",
+                    data: {
+                        resetPassword: null,
+                    }
+                }
+            }
+
+            if (!password) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Password Wajib Diisi",
+                    data: {
+                        resetPassword: null,
+                    }
+                };
+            } else if (password.length < 8) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Password Minimal 8 Karakter",
+                    data: {
+                        resetPassword: null,
+                    }
+                };
+            }
+
+            // ------------------------------- End Payload Validation ------------------------------- //
+
+
+            const getUserByEmail = await authRepository.handleGetUserByEmail({ email });
+
+            const getDataForgotPassword = await authRepository.handleCheckOTPForgotPassword({ otp });
+
+            if (getUserByEmail.email == email && getDataForgotPassword.otp == otp) {
+
+                const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
+
+                const updatedPassword = await authRepository.handleResetPassword({ 
+                    email,
+                    password: hashedPassword
+                });
+
+                const resetedOTP = await authRepository.handleResetOTP({ otp });
+
+                return {
+                    status: true,
+                    status_code: 201,
+                    message: "Password berhasil diubah!",
+                    data: {
+                        resetPassword: updatedPassword,
+                        resetOTP: resetedOTP
+                    }
+                };
+
+            } else {
+
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "OTP atau Email anda tidak cocok",
+                    data: {
+                        resetPassword: null,
+                        resetOTP: null
+                    }
+                };
+
+            }
+
+        } catch (err) {
+            
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    forgotPassword: null
+                },
+            };
+
+        }
+
+    };
+
+    /* ------------------- End Handle Reset Forgot Password ------------------- */
+
 };
 
 module.exports = authService;
