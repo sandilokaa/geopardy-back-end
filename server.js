@@ -47,6 +47,8 @@ app.post('/v1/auth/register', fileUpload.single('picture'), authController.handl
 app.post('/v1/auth/login', authController.handleLogin);
 app.get('/v1/auth/me', middleware.authenticate, middleware.isAdmin, authController.handleCurrentUser);
 app.post('/v1/auth/forgot-password', authController.handleForgotPassword);
+app.put('/v1/auth/forgot-password/verify', authController.handleVerifyForgotPassword);
+app.put('/v1/auth/reset-password', authController.handleResetPassword);
 
 /* -------------- End Auth Endpoint -------------- */
 
