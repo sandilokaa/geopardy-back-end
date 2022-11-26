@@ -1,8 +1,10 @@
 const authRepository = require("../repositories/authRepository");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
 const { JWT } = require("../libs/jwtSecurity");
 const cloudinary = require("../cloudinaries/cloudinary");
+const { forgotPassword }  = require("../utils/nodemailer");
 
 const SALT_ROUND = 10;
 
@@ -274,6 +276,150 @@ class authService {
     };
 
     /* ------------------- End Handle Login ------------------- */
+
+
+    /* ------------------- Handle Forgot Password ------------------- */
+
+    static async handleForgotPassword({ email, userId, otp }) {
+
+        try {
+
+            // ------------------------------- Payload Validation ------------------------------- //
+
+            if (!email) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Email Wajib Diisi",
+                    data: {
+                        forgotPassword: null,
+                    }
+                };
+            }
+
+            // ------------------------------- End Payload Validation ------------------------------- //
+
+            const getUserByEmail = await authRepository.handleGetUserByEmail({ email });
+
+            userId = getUserByEmail.id;
+
+            if (!getUserByEmail) {
+
+                return {
+                    status: false,
+                    statusCode: 404,
+                    message: "Email Belum Terdaftar",
+                    data: {
+                        forgotPassword: null,
+                    },
+                };
+
+            } else {
+
+                const emailTemplates = {
+                    from: 'Geopardy',
+                    to: email,
+                    subject: 'Konfirmasi Reset Password Akun Geopardy Kamu!',
+                    html:
+                        `
+                                <body>
+                                    <section style="padding: 4% 8%;">
+                                        <img 
+                                            src="https://res.cloudinary.com/dbplhgttm/image/upload/v1669093280/Geopardy-Logo-Paint_jek6bq.png" 
+                                            alt="logo-geopardy"
+                                            width="140"
+                                            heigth="auto"
+                                        />
+                                        
+                                        <div class="content" 
+                                            style="
+                                            padding:2%; 
+                                            justify-content: center;
+                                            background-color: #EEF2E6;
+                                            border: 2px solid #5F7161;"
+                                        >
+                                            
+                                            <h2 style="color: #000; text-decoration: none;"> Halo ${getUserByEmail.email}, </h2>
+                                            
+                                            <p style="text-align: center; font-size: 16px; color: #000; margin-top: 16px;">
+                                                Untuk mengkonfirmasi permintaan reset password akun Geopardy kamu, masukkan OTP di bawah ini.
+                                            </p>
+                                            
+                                            <p  class="otp" 
+                                                style="
+                                                text-align: center; 
+                                                font-size: 20px;
+                                                font-weight: 600;
+                                                padding: 2%;
+                                                background-color: #8FBDD3;
+                                                color: #fff;
+                                                width: 30%;
+                                                display: block;
+                                                margin: 0 auto;"
+                                            > 
+                                                ${otp} 
+                                            </p>
+                                            <p style="text-align: center; font-size: 16px; color: #000;"> 
+                                                Jika kamu tidak meminta reset password, silakan abaikan email ini.
+                                            </p>
+                                        </div>
+                                    </section>    
+                                </body>
+                        `
+                };
+
+                forgotPassword(emailTemplates);
+
+
+                /* --------------------------- Created & Updated Forgot Password To New Password --------------------------- */
+
+                const getDataForgotPassword = await authRepository.handleCheckForgotPassword({ userId });
+
+                if (getDataForgotPassword) {
+
+                    const updatedForgotPassword = await authRepository.handleUpdateForgotPassword({ userId, otp });
+
+                    return {
+                        status: true,
+                        status_code: 201,
+                        message: "OTP Reset Password Terkirim Ke Email User!",
+                        data: {
+                            forgotPassword: updatedForgotPassword
+                        }
+                    };
+
+                } else {
+
+                    const createdForgotPassword = await authRepository.handleForgotPassword({ userId, otp });
+                    
+                    return {
+                        status: true,
+                        status_code: 201,
+                        message: "OTP Reset Password Terkirim Ke Email User!",
+                        data: {
+                            forgotPassword: createdForgotPassword
+                        }
+                    };
+                }
+
+                /* --------------------------- End Created & Updated Forgot Password To New Password --------------------------- */
+            }
+
+        } catch (err) {
+            
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    forgotPassword: null
+                },
+            };
+
+        }
+    };
+
+    /* ------------------- End Handle Forgot Password ------------------- */
 
 };
 

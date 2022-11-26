@@ -1,4 +1,4 @@
-const { users } = require("../models");
+const { users, forgot_passwords } = require("../models");
 
 class usersRepository {
 
@@ -36,6 +36,37 @@ class usersRepository {
     };
 
     /* ------------------- End Handle Register ------------------- */
+
+
+    /* ------------------- Handle Check Forgot Password ------------------- */
+
+    static async handleCheckForgotPassword({ userId }) {
+    
+        const checkedForgotPassword = await forgot_passwords.findOne({
+            where: { userId }
+        });
+
+        return checkedForgotPassword;
+
+    };
+
+    /* ------------------- End Handle Check Forgot Password ------------------- */
+
+
+    /* ------------------- Handle Forgot Password ------------------- */
+
+    static async handleForgotPassword({ userId, otp }) {
+    
+        const createdForgotPassword = await forgot_passwords.create({
+            userId,
+            otp
+        });
+
+        return createdForgotPassword;
+
+    };
+
+    /* ------------------- End Handle Forgot Password ------------------- */
 
 };
 
