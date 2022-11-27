@@ -334,9 +334,10 @@ class authService {
                                         <div class="content" 
                                             style="
                                             padding:2%; 
+                                            margin: 2% 0 0 0;
                                             justify-content: center;
-                                            background-color: #EEF2E6;
-                                            border: 2px solid #5F7161;"
+                                            background-color: #FFFFFF;
+                                            border: 2px solid #323232;"
                                         >
                                             
                                             <h2 style="color: #000; text-decoration: none;"> Halo ${getUserByEmail.email}, </h2>
@@ -348,12 +349,13 @@ class authService {
                                             <p  class="otp" 
                                                 style="
                                                 text-align: center; 
-                                                font-size: 20px;
+                                                font-size: 24px;
                                                 font-weight: 600;
+                                                letter-spacing: 2px;
                                                 padding: 2%;
-                                                background-color: #8FBDD3;
+                                                background-color: #0D72CC;
                                                 color: #fff;
-                                                width: 30%;
+                                                width: 25%;
                                                 display: block;
                                                 margin: 0 auto;"
                                             > 

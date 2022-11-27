@@ -84,6 +84,23 @@ class usersRepository {
     /* ------------------- End Handle Forgot Password ------------------- */
 
 
+    /* ------------------- Handle Forgot Password ------------------- */
+
+    static async handleUpdateForgotPassword({ userId, otp }) {
+    
+        const updatedForgotPassword = await forgot_passwords.update({
+            otp
+        }, {
+            where: { userId }
+        });
+
+        return updatedForgotPassword;
+
+    };
+
+    /* ------------------- End Handle Forgot Password ------------------- */
+
+
     /* ------------------- Handle Verify Forgot Password ------------------- */
 
     static async handleVerifyForgotPassword({ userId, otp, isVerified }) {
