@@ -56,6 +56,7 @@ app.put('/v1/auth/reset-password', authController.handleResetPassword);
 /* -------------- Admin Endpoint -------------- */
 
 app.put('/v1/admin/update/:id', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleAdminUpdateProfile );
+app.post('/v1/admin/risk-level', middleware.authenticate, middleware.isAdmin, adminController.handleCreateRiskLevel );
 
 /* -------------- End Admin Endpoint -------------- */
 
