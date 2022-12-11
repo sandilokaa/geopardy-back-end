@@ -28,4 +28,28 @@ const handleAdminUpdateProfile = async(req, res) => {
 /* ------------------- End Handle Admin Update Profile ------------------- */
 
 
-module.exports = { handleAdminUpdateProfile };
+/* ------------------- Handle Create Risk Level ------------------- */
+
+const handleCreateRiskLevel = async(req, res, next) => {
+
+    const { riskLevel } = req.body;
+
+    const { status, status_code, message, data} = await adminService.handleCreateRiskLevel({
+        riskLevel
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+
+}
+
+/* ------------------- End Handle Create Risk Level ------------------- */
+
+
+module.exports = { 
+    handleAdminUpdateProfile,
+    handleCreateRiskLevel 
+};

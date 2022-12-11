@@ -76,6 +76,50 @@ class adminService {
 
     /* ------------------- End Handle Admin Update Profile ------------------- */
 
+
+    /* ------------------- Handle Create Risk Level ------------------- */
+
+    static async handleCreateRiskLevel({ riskLevel }) {
+        
+        try {
+
+            if (!riskLevel) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Risk level wajib diisi",
+                    data: {
+                        riskLevel: null,
+                    }
+                }
+            }
+
+            const createdRiskLevel = await adminRepository.handleCreateRiskLevel({ riskLevel });
+
+            return {
+                status: true,
+                status_code: 201,
+                message: "Risk level berhasil dibuat!",
+                data: {
+                    riskLevel: createdRiskLevel
+                }
+            };
+
+        } catch (err) {
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    forgotPassword: null
+                },
+            };
+        }
+
+    }
+
+    /* ------------------- End Handle Create Risk Level ------------------- */
+
 };
 
 module.exports = adminService;

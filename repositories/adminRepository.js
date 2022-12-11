@@ -1,4 +1,4 @@
-const { users } = require("../models");
+const { users, risk_levels } = require("../models");
 
 class adminRepository {
 
@@ -37,6 +37,19 @@ class adminRepository {
     };
 
     /* ------------------- End Handle Admin Update Profile ------------------- */
+
+
+    /* ------------------- Handle Create Risk Level ------------------- */
+
+    static async handleCreateRiskLevel({ riskLevel }) {
+    
+        const createdRiskLevel = await risk_levels.create({ riskLevel });
+
+        return createdRiskLevel;
+
+    };
+
+    /* ------------------- End Handle Create Risk Level ------------------- */
 
 };
 
