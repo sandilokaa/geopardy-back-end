@@ -11,12 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      sub_district_data.belongsTo(models.users, {
+        foreignKey: "userId"
+      });
+      
     }
   }
   sub_district_data.init({
+    userId: DataTypes.INTEGER,
     districtName: DataTypes.STRING,
     latitude: DataTypes.STRING,
     longitude: DataTypes.STRING,
+    riskLevel: DataTypes.STRING,
     description: DataTypes.TEXT,
     picture: DataTypes.TEXT
   }, {

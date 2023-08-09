@@ -24,6 +24,8 @@ app.use("/public/files", express.static(path.join(__dirname, "/storages")));
 
 const authController = require("./controllers/authController");
 
+const userController = require("./controllers/userController");
+
 const adminController = require("./controllers/adminController");
 
 // ------------------------- End Import Controllers ------------------------- //
@@ -53,10 +55,20 @@ app.put('/v1/auth/reset-password', authController.handleResetPassword);
 /* -------------- End Auth Endpoint -------------- */
 
 
+/* -------------- User Endpoint -------------- */
+
+app.get('/v1/sub-district/results', userController.handleGetSubDistrictData);
+app.get('/v1/sub-district/results/:id', userController.handleGetSubDistrictDataById);
+
+/* -------------- End User Endpoint -------------- */
+
+
 /* -------------- Admin Endpoint -------------- */
 
 app.put('/v1/admin/update/:id', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleAdminUpdateProfile );
 app.post('/v1/admin/risk-level', middleware.authenticate, middleware.isAdmin, adminController.handleCreateRiskLevel );
+app.post('/v1/admin/sub-district', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleCreateSubDistrict );
+app.put('/v1/admin/sub-district/:id', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleUpdateSubDistrict );
 
 /* -------------- End Admin Endpoint -------------- */
 

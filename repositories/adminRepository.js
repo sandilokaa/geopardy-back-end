@@ -1,4 +1,9 @@
-const { users, risk_levels } = require("../models");
+const { 
+    users, 
+    sub_district_data, 
+    risk_levels, 
+    results_data 
+} = require("../models");
 
 class adminRepository {
 
@@ -50,6 +55,50 @@ class adminRepository {
     };
 
     /* ------------------- End Handle Create Risk Level ------------------- */
+
+
+    /* ------------------- Handle Create Sub District ------------------- */
+
+    static async handleCreateSubDistrict({ userId, districtName, latitude, longitude, riskLevel, description, picture }) {
+    
+        const createdSubDistrict = await sub_district_data.create({
+            userId,
+            districtName,
+            latitude,
+            longitude,
+            riskLevel,
+            description,
+            picture
+        });
+
+        return createdSubDistrict;
+
+    };
+
+    /* ------------------- End Handle Create Sub District ------------------- */
+
+
+    /* ------------------- Handle Update Sub District ------------------- */
+
+    static async handleUpdateSubDistrict({ id, districtName, latitude, longitude, riskLevel, description, picture }) {
+    
+        const updatedSubDistrictData = await sub_district_data.update({
+            districtName,
+            latitude,
+            longitude,
+            riskLevel,
+            description,
+            picture
+        },
+        {
+            where: { id }
+        });
+
+        return updatedSubDistrictData;
+
+    };
+
+    /* ------------------- End Handle Update Sub District ------------------- */
 
 };
 

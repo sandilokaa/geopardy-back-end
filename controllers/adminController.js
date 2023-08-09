@@ -44,12 +44,72 @@ const handleCreateRiskLevel = async(req, res, next) => {
         data: data,
     });
 
-}
+};
 
 /* ------------------- End Handle Create Risk Level ------------------- */
 
 
+/* ------------------- Handle Create Sub District ------------------- */
+
+const handleCreateSubDistrict = async(req, res, next) => {
+
+    const userId = req.user.id;
+
+    const { districtName, latitude, longitude, riskLevel, description } = req.body;
+
+    const { status, status_code, message, data} = await adminService.handleCreateSubDistrict({
+        userId,
+        districtName,
+        latitude,
+        longitude,
+        riskLevel,
+        description,
+        picture: req.file
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+
+};
+
+/* ------------------- End Handle Create Sub District ------------------- */
+
+
+/* ------------------- Handle Update Sub District ------------------- */
+
+const handleUpdateSubDistrict = async(req, res, next) => {
+
+    const { id } = req.params;
+
+    const { districtName, latitude, longitude, riskLevel, description } = req.body;
+
+    const { status, status_code, message, data} = await adminService.handleUpdateSubDistrict({
+        id,
+        districtName,
+        latitude,
+        longitude,
+        riskLevel,
+        description,
+        picture: req.file
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+
+};
+
+/* ------------------- End Handle Update Sub District ------------------- */
+
+
 module.exports = { 
     handleAdminUpdateProfile,
-    handleCreateRiskLevel 
+    handleCreateRiskLevel,
+    handleCreateSubDistrict,
+    handleUpdateSubDistrict 
 };

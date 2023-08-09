@@ -1,4 +1,5 @@
 const adminRepository = require("../repositories/adminRepository");
+const userRepository = require("../repositories/userRepository");
 const cloudinary = require("../cloudinaries/cloudinary");
 
 class adminService {
@@ -80,8 +81,10 @@ class adminService {
     /* ------------------- Handle Create Risk Level ------------------- */
 
     static async handleCreateRiskLevel({ riskLevel }) {
-        
+
         try {
+
+            // ------------------------------- Payload Validation ------------------------------- //
 
             if (!riskLevel) {
                 return {
@@ -93,6 +96,8 @@ class adminService {
                     }
                 }
             }
+
+            // ------------------------------- End Payload Validation ------------------------------- //
 
             const createdRiskLevel = await adminRepository.handleCreateRiskLevel({ riskLevel });
 
@@ -111,14 +116,204 @@ class adminService {
                 status_code: 500,
                 message: err.message,
                 data: {
-                    forgotPassword: null
+                    riskLevel: null
                 },
             };
         }
 
-    }
+    };
 
     /* ------------------- End Handle Create Risk Level ------------------- */
+
+
+    /* ------------------- Handle Create Sub District ------------------- */
+
+    static async handleCreateSubDistrict({ userId, districtName, latitude, longitude, riskLevel, description, picture }) {
+
+        try {
+
+            // ------------------------------- Payload Validation ------------------------------- //
+
+            if (!districtName) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "District Name wajib diisi",
+                    data: {
+                        subDistrictData: null,
+                    }
+                }
+            }
+
+            if (!latitude) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Latitude wajib diisi",
+                    data: {
+                        subDistrictData: null,
+                    }
+                }
+            }
+
+            if (!longitude) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Longitude wajib diisi",
+                    data: {
+                        subDistrictData: null,
+                    }
+                }
+            }
+
+            if (!riskLevel) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Risk level wajib diisi",
+                    data: {
+                        subDistrictData: null,
+                    }
+                }
+            }
+
+            if (!description) {
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Description wajib diisi",
+                    data: {
+                        subDistrictData: null,
+                    }
+                }
+            }
+
+            // ------------------------------- End Payload Validation ------------------------------- //
+
+            let pictures = "";
+
+            if (picture) {
+                const fileBase64 = picture.buffer.toString("base64");
+                const file = `data:${picture.mimetype};base64,${fileBase64}`;
+                const cloudinaryPicture = await cloudinary.uploader.upload(file);
+                pictures = cloudinaryPicture.url;
+            }
+
+            const createdSubDistrictData = await adminRepository.handleCreateSubDistrict({
+                userId,
+                districtName,
+                latitude,
+                longitude,
+                riskLevel,
+                description,
+                picture: pictures
+            });
+
+            return {
+                status: true,
+                status_code: 201,
+                message: "Data berhasil dibuat!",
+                data: {
+                    subDistrictData: createdSubDistrictData
+                }
+            };
+
+        } catch (err) {
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    subDistrictData: null
+                },
+            };
+        }
+
+    };
+
+    /* ------------------- End Handle Create Sub District ------------------- */
+
+
+    /* ------------------- Handle Update Sub District ------------------- */
+
+    static async handleUpdateSubDistrict({ id, districtName, latitude, longitude, riskLevel, description, picture }) {
+
+        try {
+
+            const getSubDistrictDataById = await userRepository.handleGetSubDistrictDataById({ id });
+
+            if (getSubDistrictDataById.id == id) {
+
+                // ------------------------------- Payload Validation ------------------------------- //
+
+                let pictures = "";
+
+                if (picture) {
+                    const fileBase64 = picture.buffer.toString("base64");
+                    const file = `data:${picture.mimetype};base64,${fileBase64}`;
+                    const cloudinaryPicture = await cloudinary.uploader.upload(file);
+                    pictures = cloudinaryPicture.url;
+                } else {
+                    pictures = getSubDistrictDataById.picture;
+                }
+
+                if (!districtName){
+                    districtName = getSubDistrictDataById.districtName;
+                }
+
+                if (!latitude){
+                    latitude = getSubDistrictDataById.latitude;
+                }
+
+                if (!longitude){
+                    longitude = getSubDistrictDataById.longitude;
+                }
+
+                if (!riskLevel){
+                    riskLevel = getSubDistrictDataById.riskLevel;
+                }
+
+                if (!description){
+                    description = getSubDistrictDataById.description;
+                }
+
+                // ------------------------------- End Payload Validation ------------------------------- //
+
+                const updatedSubDistrictData = await adminRepository.handleUpdateSubDistrict({
+                    id, 
+                    districtName,
+                    latitude,
+                    longitude,
+                    description,
+                    picture: pictures
+                });
+
+                return {
+                    status: true,
+                    status_code: 201,
+                    message: "Data berhasil diubah!",
+                    data: {
+                        subDistrictData: updatedSubDistrictData
+                    }
+                };
+
+            }
+
+        } catch (err) {
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    subDistrictData: null
+                },
+            };
+        }
+
+    };
+
+    /* ------------------- End Handle Update Sub District ------------------- */
 
 };
 

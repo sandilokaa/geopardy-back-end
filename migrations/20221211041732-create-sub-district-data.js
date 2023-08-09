@@ -9,6 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      userId: {
+        type: Sequelize.INTEGER,
+        reference: {
+          models: "users",
+          key: "id"
+        }
+      },
       districtName: {
         type: Sequelize.STRING
       },
@@ -16,6 +23,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       longitude: {
+        type: Sequelize.STRING
+      },
+      riskLevel: {
         type: Sequelize.STRING
       },
       description: {
