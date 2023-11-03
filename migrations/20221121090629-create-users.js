@@ -21,15 +21,6 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING
       },
-      city: {
-        type: Sequelize.STRING
-      },
-      picture: {
-        type: Sequelize.TEXT
-      },
-      role: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

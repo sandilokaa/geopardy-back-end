@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "sanlokaja123",
+    "username": "root",
+    "password": null,
     "database": "geopardy_db",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   },
   "test": {
-    "username": "postgres",
-    "password": "sanlokaja123",
+    "username": "root",
+    "password": null,
     "database": "geopardy_db",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   },
   "production": {
-    "username": "postgres",
-    "password": "sanlokaja123",
+    "username": "root",
+    "password": null,
     "database": "geopardy_db",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   }
 }

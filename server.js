@@ -24,10 +24,6 @@ app.use("/public/files", express.static(path.join(__dirname, "/storages")));
 
 const authController = require("./controllers/authController");
 
-const userController = require("./controllers/userController");
-
-const adminController = require("./controllers/adminController");
-
 // ------------------------- End Import Controllers ------------------------- //
 
 
@@ -45,32 +41,11 @@ const middleware = require("./middlewares/auth");
 
 /* -------------- Auth Endpoint -------------- */
 
-app.post('/v1/auth/register', fileUpload.single('picture'), authController.handleRegister);
-app.post('/v1/auth/login', authController.handleLogin);
-app.get('/v1/auth/me', middleware.authenticate, middleware.isAdmin, authController.handleCurrentUser);
-app.post('/v1/auth/forgot-password', authController.handleForgotPassword);
-app.put('/v1/auth/forgot-password/verify', authController.handleVerifyForgotPassword);
-app.put('/v1/auth/reset-password', authController.handleResetPassword);
+app.post('/api/v1/auth/register', authController.handleAdminRegister);
+app.post('/api/v1/auth/login', authController.handleAdminLogin);
+app.get('/api/v1/auth/me', middleware.authenticate, middleware.isAdmin, authController.handleCurrentUser);
 
 /* -------------- End Auth Endpoint -------------- */
-
-
-/* -------------- User Endpoint -------------- */
-
-app.get('/v1/sub-district/results', userController.handleGetSubDistrictData);
-app.get('/v1/sub-district/results/:id', userController.handleGetSubDistrictDataById);
-
-/* -------------- End User Endpoint -------------- */
-
-
-/* -------------- Admin Endpoint -------------- */
-
-app.put('/v1/admin/update/:id', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleAdminUpdateProfile );
-app.post('/v1/admin/risk-level', middleware.authenticate, middleware.isAdmin, adminController.handleCreateRiskLevel );
-app.post('/v1/admin/sub-district', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleCreateSubDistrict );
-app.put('/v1/admin/sub-district/:id', middleware.authenticate, middleware.isAdmin, fileUpload.single('picture'), adminController.handleUpdateSubDistrict );
-
-/* -------------- End Admin Endpoint -------------- */
 
 // ------------------------- End Define Routes ------------------------- //
 
