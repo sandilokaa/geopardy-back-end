@@ -57,3 +57,5 @@ app.listen(PORT, () => {
 });
 
 // ------------------------- End Server Listen ------------------------- //
+
+module.exports = app;
