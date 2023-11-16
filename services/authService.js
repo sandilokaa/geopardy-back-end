@@ -22,7 +22,7 @@ class AuthService {
                     status_code: 400,
                     message: "Name is required!",
                     data: {
-                        registeredUser: null,
+                        registeredAdmin: null,
                     },
                 };
             }
@@ -33,7 +33,7 @@ class AuthService {
                     status_code: 400,
                     message: "Email is required!",
                     data: {
-                        registeredUser: null,
+                        registeredAdmin: null,
                     },
                 };
             }
@@ -44,7 +44,7 @@ class AuthService {
                     status_code: 400,
                     message: "Password is required!",
                     data: {
-                        registeredUser: null,
+                        registeredAdmin: null,
                     },
                 };
             } else if (password.length < 8) {
@@ -53,7 +53,7 @@ class AuthService {
                     status_code: 400,
                     message: "Admin password is at least 8 characters long!",
                     data: {
-                        registeredUser: null,
+                        registeredAdmin: null,
                     },
                 };
             }
@@ -64,23 +64,23 @@ class AuthService {
                     status_code: 400,
                     message: "Phone Number is required!",
                     data: {
-                        registeredUser: null,
+                        registeredAdmin: null,
                     },
                 };
             }
 
             // ------------------------- End Payload Validation ------------------------- //
 
-            const getUserByEmail = await authRepository.handleGetUserByEmail({ email });
+            const getAdminByEmail = await authRepository.handleGetAdminByEmail({ email });
 
-            if (getUserByEmail) {
+            if (getAdminByEmail) {
 
                 return {
                     status: false,
                     status_code: 400,
                     message: "Email already in use!",
                     data: {
-                        registeredUser: null,
+                        registeredAdmin: null,
                     },
                 };
 
@@ -100,7 +100,7 @@ class AuthService {
                     status_code: 201,
                     message: "Successfully registered admin!",
                     data: {
-                        registeredUser: handleAdminRegistered,
+                        registeredAdmin: handleAdminRegistered,
                     },
                 };
             }
@@ -112,7 +112,7 @@ class AuthService {
                 status_code: 500,
                 message: err.message,
                 data: {
-                    registeredUser: null,
+                    registeredAdmin: null,
                 },
             };
 
@@ -165,9 +165,9 @@ class AuthService {
             // ------------------------- End Payload Validation ------------------------- //
 
 
-            const getUserByEmail = await authRepository.handleGetUserByEmail({ email });
+            const getAdminByEmail = await authRepository.handleGetAdminByEmail({ email });
 
-            if (!getUserByEmail) {
+            if (!getAdminByEmail) {
                 return {
                     status: false,
                     status_code: 404,
@@ -178,13 +178,13 @@ class AuthService {
                 };
             } else {
 
-                const isPasswordMatch = await bcrypt.compare(password, getUserByEmail.password);
+                const isPasswordMatch = await bcrypt.compare(password, getAdminByEmail.password);
 
                 if (isPasswordMatch) {
 
                     const token = jwt.sign({
-                        id: getUserByEmail.id,
-                        email: getUserByEmail.email,
+                        id: getAdminByEmail.id,
+                        email: getAdminByEmail.email,
                     },
                         JWT.SECRET,
                         {
