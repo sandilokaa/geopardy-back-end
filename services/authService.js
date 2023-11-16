@@ -6,7 +6,7 @@ const { JWT } = require("../libs/jwtSecurity");
 
 const SALT_ROUND = 10;
 
-class authService {
+class AuthService {
 
     /* ------------------- Handle Admin Register ------------------- */
 
@@ -232,4 +232,4 @@ class authService {
 
 };
 
-module.exports = authService;
+module.exports = AuthService;

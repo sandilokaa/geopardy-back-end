@@ -1,12 +1,12 @@
-const { users } = require("../models");
+const { Admins } = require("../models");
 
-class usersRepository {
+class AuthRepository {
 
     /* ------------------- Handle Get User By Email ------------------- */
 
     static async handleGetUserByEmail({ email }) {
         
-        const getUserByEmail = await users.findOne({
+        const getUserByEmail = await Admins.findOne({
             where : { email }
         });
 
@@ -21,7 +21,7 @@ class usersRepository {
 
     static async handleAdminRegister({ name, email, password, phoneNumber }) {
     
-        const handleAdminRegistered = await users.create({
+        const handleAdminRegistered = await Admins.create({
             name,
             email,
             password,
@@ -37,4 +37,4 @@ class usersRepository {
 
 };
 
-module.exports = usersRepository;
+module.exports = AuthRepository;

@@ -23,6 +23,7 @@ app.use("/public/files", express.static(path.join(__dirname, "/storages")));
 // ------------------------- Import Controllers ------------------------- //
 
 const authController = require("./controllers/authController");
+const riskLevelController = require("./controllers/riskLevelController");
 
 // ------------------------- End Import Controllers ------------------------- //
 
@@ -43,9 +44,15 @@ const middleware = require("./middlewares/auth");
 
 app.post('/api/v1/auth/register', authController.handleAdminRegister);
 app.post('/api/v1/auth/login', authController.handleAdminLogin);
-app.get('/api/v1/auth/me', middleware.authenticate, middleware.isAdmin, authController.handleCurrentUser);
+app.get('/api/v1/auth/me', middleware.authenticate, authController.handleCurrentUser);
 
 /* -------------- End Auth Endpoint -------------- */
+
+/* -------------- Risk Level Endpoint -------------- */
+
+app.post('/api/v1/risk-level', middleware.authenticate, riskLevelController.handleCreateRiskLevel);
+
+/* -------------- End Risk Level Endpoint -------------- */
 
 // ------------------------- End Define Routes ------------------------- //
 

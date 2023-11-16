@@ -45,18 +45,4 @@ const authenticate = async (req, res, next) => {
 
 };
 
-const isAdmin = async (req, res, next) => {
-    
-    const user = req.user;
-
-    if (user.role === ROLES.ADMIN) return next();
-
-    return res.status(401).send({
-        status: false,
-        message: "Akun anda harus admin untuk mengakses resource ini.",
-        data: null,
-    });
-
-};
-
-module.exports ={ authenticate, isAdmin };
+module.exports ={ authenticate };
