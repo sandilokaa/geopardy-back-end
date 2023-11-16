@@ -4,13 +4,13 @@ class AuthRepository {
 
     /* ------------------- Handle Get User By Email ------------------- */
 
-    static async handleGetUserByEmail({ email }) {
+    static async handleGetAdminByEmail({ email }) {
         
-        const getUserByEmail = await Admins.findOne({
+        const getAdminByEmail = await Admins.findOne({
             where : { email }
         });
 
-        return getUserByEmail;
+        return getAdminByEmail;
 
     };
 

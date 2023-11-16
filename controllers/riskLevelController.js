@@ -4,12 +4,12 @@ const riskLevelService = require("../services/riskLevelService");
 
 const handleCreateRiskLevel = async (req, res) => {
 
-    const userId = req.user.id;
+    const adminId = req.admin.id;
 
     const { riskLevel, description } = req.body;
 
     const { status, status_code, message, data} = await riskLevelService.handleCreateRiskLevel({
-        userId,
+        adminId,
         riskLevel,
         description
     });

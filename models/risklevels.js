@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      RiskLevels.belongsTo(models.Admins, {
+        foreignKey: 'adminId'
+      });
+      
     }
   }
   RiskLevels.init({

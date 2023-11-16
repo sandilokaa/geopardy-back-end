@@ -27,9 +27,9 @@ const authenticate = async (req, res, next) => {
 
         const {email} = jwt.verify(token, JWT.SECRET);
 
-        const getUserByEmail = await authRepository.handleGetUserByEmail({ email });
+        const getAdminByEmail = await authRepository.handleGetAdminByEmail({ email });
 
-        req.user = getUserByEmail;
+        req.admin = getAdminByEmail;
 
         next();
 

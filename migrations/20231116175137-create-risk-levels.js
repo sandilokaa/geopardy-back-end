@@ -10,7 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       adminId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        reference: {
+          model: 'Admins',
+          key: 'id'
+        }
       },
       riskLevel: {
         type: Sequelize.STRING
