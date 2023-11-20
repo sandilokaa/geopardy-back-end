@@ -36,7 +36,7 @@ class RiskLevelService {
 
             const getRiskLevel = await riskLevelRepository.handleGetRiskLevel({ riskLevel });
 
-            if (getRiskLevel.riskLevel) {
+            if (getRiskLevel?.riskLevel) {
 
                 return {
                     status: false,

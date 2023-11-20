@@ -24,6 +24,7 @@ app.use("/public/files", express.static(path.join(__dirname, "/storages")));
 
 const authController = require("./controllers/authController");
 const riskLevelController = require("./controllers/riskLevelController");
+const cityController = require("./controllers/cityController");
 
 // ------------------------- End Import Controllers ------------------------- //
 
@@ -53,6 +54,13 @@ app.get('/api/v1/auth/me', middleware.authenticate, authController.handleCurrent
 app.post('/api/v1/risk-level', middleware.authenticate, riskLevelController.handleCreateRiskLevel);
 
 /* -------------- End Risk Level Endpoint -------------- */
+
+/* -------------- City Endpoint -------------- */
+
+app.post('/api/v1/city', middleware.authenticate, cityController.handleCreateCity);
+
+/* -------------- End City Endpoint -------------- */
+
 
 // ------------------------- End Define Routes ------------------------- //
 
