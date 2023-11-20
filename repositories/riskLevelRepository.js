@@ -13,6 +13,20 @@ class RiskLevelRepository {
     };
 
     /* ------------------- End Handle Create Risk Level ------------------- */
+
+    /* ------------------- Handle Get Risk Level ------------------- */
+
+    static async handleGetRiskLevel({ riskLevel }) {
+    
+        const handleGetRiskLevel = await RiskLevels.findOne({
+            where: { riskLevel }
+        });
+
+        return handleGetRiskLevel;
+        
+    };
+
+    /* ------------------- End Handle Get Risk Level ------------------- */
     
 };
 

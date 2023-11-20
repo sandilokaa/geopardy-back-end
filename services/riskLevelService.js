@@ -34,16 +34,32 @@ class RiskLevelService {
 
             // ------------------------- End Payload Validation ------------------------- //
 
-            const handleCreateRiskLevel = await riskLevelRepository.handleCreateRiskLevel({ adminId, riskLevel, description });
+            const getRiskLevel = await riskLevelRepository.handleGetRiskLevel({ riskLevel });
 
-            return {
-                status: true,
-                status_code: 201,
-                message: "New risk level created successfully (:",
-                data: {
-                    createdRiskLevel: handleCreateRiskLevel,
-                },
-            };
+            if (getRiskLevel.riskLevel) {
+
+                return {
+                    status: false,
+                    status_code: 400,
+                    message: "Risk level already available!",
+                    data: {
+                        createdRiskLevel: null,
+                    },
+                };
+
+            } else {
+
+                const handleCreateRiskLevel = await riskLevelRepository.handleCreateRiskLevel({ adminId, riskLevel, description });
+
+                return {
+                    status: true,
+                    status_code: 201,
+                    message: "New risk level created successfully (:",
+                    data: {
+                        createdRiskLevel: handleCreateRiskLevel,
+                    },
+                };
+            }
 
         } catch (err) {
             
