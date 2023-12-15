@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       RiskLevels.belongsTo(models.Admins, {
         foreignKey: 'adminId'
       });
+
+      RiskLevels.hasMany(models.CityDetails);
       
     }
   }

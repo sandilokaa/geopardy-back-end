@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'adminId'
       });
 
+      Cities.hasMany(models.CityDetails);
+
     }
   }
   Cities.init({

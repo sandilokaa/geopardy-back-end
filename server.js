@@ -69,6 +69,12 @@ app.put('/api/v1/city-detail/:id', middleware.authenticate, fileUpload.single("p
 /* -------------- End City Detail Endpoint -------------- */
 
 
+/* -------------- City Summary Endpoint -------------- */
+
+
+/* -------------- End City Summary Endpoint -------------- */
+
+
 // ------------------------- End Define Routes ------------------------- //
 
 

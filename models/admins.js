@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      Admins.hasMany(models.Cities);
+      Admins.hasMany(models.RiskLevels);
+      Admins.hasMany(models.CityDetails);
+
     }
   }
   Admins.init({
