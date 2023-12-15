@@ -25,6 +25,7 @@ app.use("/public/files", express.static(path.join(__dirname, "/storages")));
 const authController = require("./controllers/authController");
 const riskLevelController = require("./controllers/riskLevelController");
 const cityController = require("./controllers/cityController");
+const cityDetailController = require("./controllers/cityDetailController");
 
 // ------------------------- End Import Controllers ------------------------- //
 
@@ -60,6 +61,12 @@ app.post('/api/v1/risk-level', middleware.authenticate, riskLevelController.hand
 app.post('/api/v1/city', middleware.authenticate, cityController.handleCreateCity);
 
 /* -------------- End City Endpoint -------------- */
+
+/* -------------- City Detail Endpoint -------------- */
+
+app.put('/api/v1/city-detail/:id', middleware.authenticate, fileUpload.single("picture"), cityDetailController.handleUpdateCityDetail);
+
+/* -------------- End City Detail Endpoint -------------- */
 
 
 // ------------------------- End Define Routes ------------------------- //

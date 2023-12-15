@@ -6,11 +6,12 @@ const handleCreateCity = async (req, res) => {
 
     const adminId = req.admin.id;
 
-    const { cityName } = req.body;
+    const { cityName, cityId } = req.body;
 
     const { status, status_code, message, data} = await cityService.handleCreateCity({
         adminId,
-        cityName
+        cityName,
+        cityId
     });
 
     res.status(status_code).send({

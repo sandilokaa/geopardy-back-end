@@ -1,10 +1,11 @@
 const cityRepository = require("../repositories/cityRepository");
+const cityDetailRepository = require("../repositories/cityDetailRepository");
 
 class CityService {
 
     /* ------------------- Handle Create City ------------------- */
 
-    static async handleCreateCity({ adminId, cityName }) {
+    static async handleCreateCity({ adminId, cityName, cityId }) {
 
         try {
 
@@ -39,6 +40,7 @@ class CityService {
             } else {
 
                 const handleCreatedCity = await cityRepository.handleCreateCity({ adminId, cityName });
+                const handleCreatedDetailCity = await cityDetailRepository.handleCreateCityDetail({ adminId: handleCreatedCity.adminId, cityId:handleCreatedCity.id });
 
                 return {
                     status: true,
@@ -46,6 +48,7 @@ class CityService {
                     message: "New city created successfully (:",
                     data: {
                         createdCity: handleCreatedCity,
+                        createdDetailCity: handleCreatedDetailCity
                     },
                 };
             }
