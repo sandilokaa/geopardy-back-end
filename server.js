@@ -14,7 +14,7 @@ app.use(cors());
 
 // ------------------------- Public File Access ------------------------- //
 
-app.use("/public/files", express.static(path.join(__dirname, "/storages")));
+app.use("/storages", express.static(path.join(__dirname, "storages")));
 
 // ------------------------- End Public File Access ------------------------- //
 

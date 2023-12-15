@@ -21,30 +21,30 @@ class CityDetailService {
             if (getedCityDetailById.id == id) {
 
                 if (!riskLevelId){
-                    riskLevelId = handleGetedUserById.riskLevelId;
+                    riskLevelId = getedCityDetailById.riskLevelId;
                 }
 
                 if (!latitude){
-                    latitude = handleGetedUserById.latitude;
+                    latitude = getedCityDetailById.latitude;
                 }
 
                 if (!longitude){
-                    longitude = handleGetedUserById.longitude;
+                    longitude = getedCityDetailById.longitude;
                 }
 
                 if (!description){
-                    description = handleGetedUserById.description;
+                    description = getedCityDetailById.description;
                 }
 
                 if (!picture){
-                    picture = handleGetedUserById.picture;
+                    picture = getedCityDetailById.picture;
                 } else {
-                    fileRemove(handleGetedUserById.picture)
+                    fileRemove(getedCityDetailById.picture)
                 }
 
             }
 
-            const updatedCityDetail = cityDetailRepository.handleUpdateCityDetail({
+            const updatedCityDetail = await cityDetailRepository.handleUpdateCityDetail({
                 id,
                 riskLevelId,
                 latitude,
