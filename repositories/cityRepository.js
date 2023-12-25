@@ -34,9 +34,23 @@ class CityRepository {
 
     static async handleGetAllCity({ cityName }){
 
-        const getedAllCity = await Cities.findAll({
-            where: { cityName }
-        });
+        const query = {
+            where: {}
+        };
+
+        if (cityName) {
+            const searchCityByName = await Cities.findAll({
+                where: {
+                    [Op.or]: [
+                        { cityName: { [Op.like]: '%' + cityName + '%' } },
+                    ]
+                }
+            });
+
+            return searchCityByName;
+        }
+
+        const getedAllCity = await Cities.findAll(query);
 
         return getedAllCity;
 
