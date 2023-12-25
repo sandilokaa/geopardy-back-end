@@ -1,4 +1,4 @@
-const { CityDetails } = require("../models");
+const { CityDetails, Cities, RiskLevels } = require("../models");
 
 class CityDetailRepository {
 
@@ -68,9 +68,31 @@ class CityDetailRepository {
 
     static async handleGetCityByCityId({ cityId }){
 
-        const getedCityByCityId = CityDetails.findOne({
-            where: { cityId }
-        });
+        const query = {
+            where: { cityId },
+            attributes: [
+                'id',
+                'adminId',
+                'cityId',
+                'riskLevelId',
+                'latitude',
+                'longitude',
+                'picture',
+                'description'
+            ],
+            include: [
+                {
+                    model: Cities,
+                    attributes: ['cityName']
+                },
+                {
+                    model: RiskLevels,
+                    attributes: ['riskLevel', 'description']
+                }
+            ]
+        }
+
+        const getedCityByCityId = CityDetails.findOne(query);
 
         return getedCityByCityId;
 

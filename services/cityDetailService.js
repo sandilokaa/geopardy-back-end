@@ -99,7 +99,14 @@ class CityDetailService {
 
         } catch (err) {
             
-
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    getedCityByCityId: null,
+                },
+            };
 
         }
         
