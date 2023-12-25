@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       CityDetails.belongsTo(models.RiskLevels, {
         foreignKey: 'riskLevelId'
       });
-      
+
     }
   }
   CityDetails.init({

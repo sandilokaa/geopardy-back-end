@@ -59,12 +59,14 @@ app.post('/api/v1/risk-level', middleware.authenticate, riskLevelController.hand
 /* -------------- City Endpoint -------------- */
 
 app.post('/api/v1/city', middleware.authenticate, cityController.handleCreateCity);
+app.get('/api/v1/city', cityController.handleGetAllCity);
 
 /* -------------- End City Endpoint -------------- */
 
 /* -------------- City Detail Endpoint -------------- */
 
 app.put('/api/v1/city-detail/:id', middleware.authenticate, fileUpload.single("picture"), cityDetailController.handleUpdateCityDetail);
+app.get('/api/v1/city/:cityId', cityDetailController.handleGetCityByCityId);
 
 /* -------------- End City Detail Endpoint -------------- */
 

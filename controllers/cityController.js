@@ -24,4 +24,26 @@ const handleCreateCity = async (req, res) => {
 
 /* ------------------- End Handle Create City ------------------- */
 
-module.exports = { handleCreateCity };
+
+/* ------------------- Handle Get All City ------------------- */
+
+const handleGetAllCity = async (req, res) => {
+
+    const { cityName } = req.query;
+
+    const { status, status_code, message, data} = await cityService.handleGetAllCity({
+        cityName
+    });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+
+};
+
+/* ------------------- End Handle Get All City ------------------- */
+
+
+module.exports = { handleCreateCity, handleGetAllCity };

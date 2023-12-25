@@ -64,6 +64,21 @@ class CityDetailRepository {
     /* ------------------- End Handle Get City Detail By Id ------------------- */
 
 
+    /* ------------------- Handle Get City By City Id ------------------- */
+
+    static async handleGetCityByCityId({ cityId }){
+
+        const getedCityByCityId = CityDetails.findOne({
+            where: { cityId }
+        });
+
+        return getedCityByCityId;
+
+    };
+
+    /* ------------------- End Handle Get City By City Id ------------------- */
+
+
 };
 
 module.exports = CityDetailRepository;

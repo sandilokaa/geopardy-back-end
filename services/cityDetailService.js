@@ -79,6 +79,34 @@ class CityDetailService {
 
     /* ------------------- End Handle Update City Detail ------------------- */
 
+
+    /* ------------------- Handle Get City By City Id ------------------- */
+
+    static async handleGetCityByCityId({ cityId }){
+
+        try {
+            
+            const getedCityByCityId = await cityDetailRepository.handleGetCityByCityId({ cityId });
+
+            return {
+                status: true,
+                status_code: 201,
+                message: "Data displayed successfully(:",
+                data: {
+                    getedCityByCityId: getedCityByCityId,
+                },
+            };
+
+        } catch (err) {
+            
+
+
+        }
+        
+    };
+
+    /* ------------------- End Handle Get City By City Id ------------------- */
+
 };
 
 module.exports = CityDetailService;

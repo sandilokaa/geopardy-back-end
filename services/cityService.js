@@ -70,6 +70,41 @@ class CityService {
 
     /* ------------------- End Handle Create City ------------------- */
 
+
+    /* ------------------- Handle Get All City ------------------- */
+
+    static async handleGetAllCity({ cityName }){
+
+        try {
+            
+            const getedAllCity = await cityRepository.handleGetAllCity({ cityName });
+
+            return {
+                status: true,
+                status_code: 201,
+                message: "Data displayed successfully(:",
+                data: {
+                    getedAllCity: getedAllCity,
+                },
+            };
+
+        } catch (err) {
+            
+            return {
+                status: false,
+                status_code: 500,
+                message: err.message,
+                data: {
+                    getedAllCity: null,
+                },
+            };
+
+        }
+
+    };
+
+    /* ------------------- End Handle Get All City ------------------- */
+
 };
 
 module.exports = CityService;

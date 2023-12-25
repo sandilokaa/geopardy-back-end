@@ -33,4 +33,24 @@ const handleUpdateCityDetail = async (req, res) => {
 
 /* ------------------- End Handle Update City Detail ------------------- */
 
-module.exports = { handleUpdateCityDetail };
+
+/* ------------------- Handle Get City By City Id ------------------- */
+
+const handleGetCityByCityId = async (req, res) => {
+
+    const  { cityId } = req.params;
+
+    const { status, status_code, message, data} = await cityDetailService.handleGetCityByCityId({ cityId });
+
+    res.status(status_code).send({
+        status: status,
+        message: message,
+        data: data,
+    });
+
+};
+
+/* ------------------- End Handle Get City By City Id ------------------- */
+
+
+module.exports = { handleUpdateCityDetail, handleGetCityByCityId };

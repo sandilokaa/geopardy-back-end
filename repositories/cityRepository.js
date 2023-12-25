@@ -14,7 +14,8 @@ class CityRepository {
 
     /* ------------------- End Handle Create City ------------------- */
 
-    /* ------------------- Handle Get City ------------------- */
+
+    /* ------------------- Handle Get One City ------------------- */
 
     static async handleGetCity({ cityName }) {
     
@@ -26,7 +27,22 @@ class CityRepository {
         
     };
 
-    /* ------------------- End Handle Get City ------------------- */
+    /* ------------------- End Handle Get One City ------------------- */
+
+
+    /* ------------------- Handle Get All City ------------------- */
+
+    static async handleGetAllCity({ cityName }){
+
+        const getedAllCity = await Cities.findAll({
+            where: { cityName }
+        });
+
+        return getedAllCity;
+
+    };
+
+    /* ------------------- Handle Get All City ------------------- */
 
 };
 
