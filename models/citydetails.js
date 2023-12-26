@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     adminId: DataTypes.INTEGER,
     cityId: DataTypes.INTEGER,
     riskLevelId: DataTypes.INTEGER,
-    latitude: DataTypes.STRING,
-    longitude: DataTypes.STRING,
+    latitude: DataTypes.DOUBLE,
+    longitude: DataTypes.DOUBLE,
     description: DataTypes.TEXT,
     picture: DataTypes.TEXT
   }, {

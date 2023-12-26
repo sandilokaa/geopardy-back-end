@@ -31,10 +31,10 @@ module.exports = {
         }
       },
       latitude: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       longitude: {
-        type: Sequelize.STRING
+        type: Sequelize.DOUBLE
       },
       description: {
         type: Sequelize.TEXT
